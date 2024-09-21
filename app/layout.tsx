@@ -24,9 +24,9 @@ export default function RootLayout({ children }: LayoutProps) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           <div className="bg-green-600">{children}</div>
+          <Footer />
         </ThemeProvider>
       </body>
-      <Footer />
     </html>
   );
 }
