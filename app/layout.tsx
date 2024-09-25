@@ -1,8 +1,8 @@
 import { Footer } from "@/src/feature/layout/Footer";
 import { Header } from "@/src/feature/layout/Header";
+import { ThemeProvider } from "@/src/theme/ThemeProvider";
 import clsx from "clsx";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -19,7 +19,7 @@ type LayoutProps = {
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
-    <html lang="en" className="h-full w-full">
+    <html lang="en" suppressHydrationWarning>
       <body className={clsx(inter.className, "bg-background")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
