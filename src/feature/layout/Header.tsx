@@ -12,7 +12,7 @@ export const Header = async () => {
         </Link>
       </h2>
       <nav>
-        <ul className="flex space-x-10">
+        <ul className="flex space-x-10 font-bold">
           <li>
             <Link href="/RSA">RSA</Link>
           </li>

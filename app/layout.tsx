@@ -1,4 +1,3 @@
-import { Footer } from "@/src/feature/layout/Footer";
 import { Header } from "@/src/feature/layout/Header";
 import { ThemeProvider } from "@/src/theme/ThemeProvider";
 import clsx from "clsx";
@@ -20,11 +19,15 @@ type LayoutProps = {
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={clsx(inter.className, "bg-background")}>
+      <body
+        className={clsx(
+          inter.className,
+          "bg-background h-screen flex flex-col"
+        )}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <div className="bg-green-600">{children}</div>
-          <Footer />
+          <div className="flex-1 overflow-hidden">{children}</div>
         </ThemeProvider>
       </body>
     </html>
