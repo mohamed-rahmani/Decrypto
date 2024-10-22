@@ -2,7 +2,7 @@ import { LockKeyhole, MoveDown } from "lucide-react";
 
 export default function page() {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center gap-10 h-full relative z-10">
+    <div className="flex flex-col lg:flex-row items-center justify-center gap-10 h-full overflow-hidden relative z-10">
       <div className="flex flex-col lg:block items-center z-20">
         <h1 className="text-3xl lg:text-5xl font-bold flex">
           Avec<p className="text-green-400 pl-3">De</p>crypto, chiffrer

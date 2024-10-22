@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <div className="flex-1 overflow-hidden">{children}</div>
+          <div className="flex-1">{children}</div>
         </ThemeProvider>
       </body>
     </html>
