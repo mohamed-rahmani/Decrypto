@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CopyButton } from "../RSA/CopyButton";
+import { ErrorMessage } from "../RSA/ErrorMessage";
 
-interface EncryptMessageProps {
-  message: "";
-  key: number | "";
+interface formDataProps {
+  a: number | "";
+  b: number | "";
   paquet: number;
+  message: string;
 }
 
-export const EncryptForm = () => {
+const EncryptForm = () => {
+  const [error, setError] = useState<string>("");
   const [encryptedMessage, setEncryptedMessage] = useState<string>("");
-  const [formData, setFormData] = useState<EncryptMessageProps>({
-    message: "",
-    key: "",
+  const [formData, setFormData] = useState<formDataProps>({
+    a: "",
+    b: "",
     paquet: 1,
+    message: "",
   });
+
+  // Fonction pour calculer le PGCD entre deux nombres
+  function pgcd(a: number, b: number): number {
+    if (b === 0) {
+      return a;
+    }
+    return pgcd(b, a % b);
+  }
 
   // Fonction qui retourne la position exacte d'une lettre dans l'alphabet. (A=0, ..., Z=25)
   const codex = (c: string) => {
@@ -27,6 +39,7 @@ export const EncryptForm = () => {
     return n;
   };
 
+  // Fonction qui la lettre de l'aphabet en fonctino du nombre passé en paramètre. (0=A, ..., 25=Z)
   const xedoc = (n: number): string => {
     if (isNaN(n)) {
       return "?";
@@ -37,7 +50,29 @@ export const EncryptForm = () => {
     return String.fromCharCode(n + "A".charCodeAt(0));
   };
 
-  const CesarEncrypt = (msg: string, key: number, paq: number) => {
+  // Fonction qui permet de definir la plage des paquets
+  const mod2base = (paq: number) => {
+    let res = 0;
+    for (let i = 0; i < paq; i++) {
+      res = 100 * res + 25;
+    }
+    return res + 1;
+  };
+
+  // Fonction pour vérifier que 'a' est valide (c'est-à-dire que PGCD(a, base) = 1)
+  const isValidKey = (a: number, paq: number): boolean => {
+    console.log(a, paq, "mode=", mod2base(2), pgcd(a, mod2base(paq)));
+    return pgcd(a, mod2base(paq)) == 1;
+  };
+
+  // Fonction pour chiffrer un message avec la méthode affine par paquets
+  const affineEncrypt = (
+    msg: string,
+    a: number,
+    b: number,
+    paq: number
+  ): string => {
+    const base = mod2base(paq);
     const res: string[] = [];
     msg = msg.replace(/[^A-Za-z]/g, "").toUpperCase();
 
@@ -54,16 +89,14 @@ export const EncryptForm = () => {
         }
 
         let letterString = letterCode.toString();
-
         if (letterString.length < 2) {
           letterString = "0" + letterString;
-          numberString += letterString;
-        } else {
-          numberString += letterCode.toString();
         }
+        numberString += letterString;
       }
+
       const numberPair = parseInt(numberString, 10);
-      const encryptedPair = numberPair + key;
+      const encryptedPair = (a * numberPair + b) % base;
       if (paq > 1) {
         res.push(encryptedPair.toString());
       } else {
@@ -83,7 +116,7 @@ export const EncryptForm = () => {
       return {
         ...prev,
         [name]:
-          name === "key" || name === "paquet"
+          name === "a" || name === "b" || name === "paquet"
             ? value === ""
               ? ""
               : Number(value)
@@ -94,46 +127,69 @@ export const EncryptForm = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setEncryptedMessage("");
-    if (typeof formData.key === "number") {
-      setEncryptedMessage(
-        CesarEncrypt(formData.message, formData.key, formData.paquet)
-      );
+    setError("");
+    if (typeof formData.a === "number" && typeof formData.b === "number") {
+      if (isValidKey(formData.a, formData.paquet)) {
+        setEncryptedMessage(
+          affineEncrypt(
+            formData.message,
+            formData.a,
+            formData.b,
+            formData.paquet
+          )
+        );
+      } else {
+        setError(
+          formData.a +
+            " et " +
+            mod2base(formData.paquet) +
+            " ne sont pas premiers entre eux"
+        );
+      }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col m-10 gap-5">
       <input
-        name="message"
-        placeholder={"message"}
-        value={formData.message}
-        type="text"
-        pattern="[A-Za-z]+"
-        title="Veuillez entrer uniquement des lettres."
-        required
-        onChange={handleChange}
-        className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
-      />
-      <input
-        name="key"
-        placeholder={"cle"}
-        value={formData.key}
+        name="a"
+        placeholder="a"
         type="number"
         pattern="[0-9]+"
         title="Veuillez entrer uniquement des nombres."
         required
+        value={formData.a}
+        onChange={handleChange}
+        className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
+      />
+      <input
+        name="b"
+        placeholder="b"
+        type="number"
+        pattern="[0-9]+"
+        title="Veuillez entrer uniquement des nombres."
+        required
+        value={formData.b}
         onChange={handleChange}
         className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
       />
       <input
         name="paquet"
-        placeholder={"paquet"}
-        value={formData.paquet}
+        placeholder="paquet"
         type="number"
         pattern="[1-9]+"
         title="Veuillez entrer uniquement des nombres."
         required
+        value={formData.paquet}
+        onChange={handleChange}
+        className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
+      />
+      <input
+        name="message"
+        placeholder="message"
+        type="text"
+        required
+        value={formData.message}
         onChange={handleChange}
         className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
       />
@@ -157,6 +213,9 @@ export const EncryptForm = () => {
           </div>
         </div>
       )}
+      {error && <ErrorMessage errorMessage={error} />}
     </form>
   );
 };
+
+export default EncryptForm;

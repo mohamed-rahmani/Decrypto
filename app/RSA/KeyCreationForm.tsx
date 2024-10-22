@@ -106,6 +106,7 @@ export const KeyCreationForm = () => {
         type="number"
         placeholder={"p"}
         name="p"
+        required
         value={formData.p}
         onChange={handleChange}
         className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
@@ -114,6 +115,7 @@ export const KeyCreationForm = () => {
         type="number"
         placeholder={"q"}
         name="q"
+        required
         value={formData.q}
         onChange={handleChange}
         className="p-3 bg-background border rounded focus:border-green-400 focus:outline-none focus:outline-offset-0"
