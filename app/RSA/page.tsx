@@ -107,31 +107,59 @@ export default function Page() {
         <table>
           <tbody>
             <tr>
-              <td className="px-2 py-2 border-b border-r border-r-black border-b-black">
+              <td className="px-2 py-2 border-b border-r border-r-black border-b-black dark:border-r-white dark:border-b-white">
                 Message
               </td>
-              <td className="px-2 py-2 border-b border-b-black">P</td>
-              <td className="px-2 py-2 border-b border-b-black">I</td>
-              <td className="px-2 py-2 border-b border-b-black">K</td>
-              <td className="px-2 py-2 border-b border-b-black">A</td>
-              <td className="px-2 py-2 border-b border-b-black">C</td>
-              <td className="px-2 py-2 border-b border-b-black">H</td>
-              <td className="px-2 py-2 border-b border-b-black">U</td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                P
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                I
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                K
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                A
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                C
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                H
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                U
+              </td>
             </tr>
             <tr>
-              <td className="px-2 py-2 border-b border-r border-r-black border-b-black">
+              <td className="px-2 py-2 border-b border-r border-r-black border-b-black dark:border-r-white dark:border-b-white">
                 Codage
               </td>
-              <td className="px-2 py-2 border-b border-b-black">15</td>
-              <td className="px-2 py-2 border-b border-b-black">08</td>
-              <td className="px-2 py-2 border-b border-b-black">10</td>
-              <td className="px-2 py-2 border-b border-b-black">00</td>
-              <td className="px-2 py-2 border-b border-b-black">02</td>
-              <td className="px-2 py-2 border-b border-b-black">07</td>
-              <td className="px-2 py-2 border-b border-b-black">20</td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                15
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                08
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                10
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                00
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                02
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                07
+              </td>
+              <td className="px-2 py-2 border-b border-b-black dark:border-b-white">
+                20
+              </td>
             </tr>
             <tr>
-              <td className="px-2 py-2 border-r border-r-black">
+              <td className="px-2 py-2 border-r border-r-black dark:border-r-white">
                 <Latex>{`$x^{13}\\mod 33$`}</Latex>
               </td>
               <td className="px-2 py-2">9</td>
