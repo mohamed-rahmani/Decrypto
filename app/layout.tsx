@@ -1,8 +1,7 @@
-import { Footer } from "@/src/feature/layout/Footer";
 import { Header } from "@/src/feature/layout/Header";
+import { ThemeProvider } from "@/src/theme/ThemeProvider";
 import clsx from "clsx";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -19,14 +18,26 @@ type LayoutProps = {
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
-    <html lang="en" className="h-full w-full">
-      <body className={clsx(inter.className, "bg-background")}>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+          integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body
+        className={clsx(
+          inter.className,
+          "bg-background h-screen flex flex-col"
+        )}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <div className="bg-green-600">{children}</div>
+          <div className="flex-1">{children}</div>
         </ThemeProvider>
       </body>
-      <Footer />
     </html>
   );
 }
